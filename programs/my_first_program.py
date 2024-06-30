@@ -1,12 +1,23 @@
 from nada_dsl import *
 
+def compute_mean(my_int1, my_int2):
+
+    return (my_int1 + my_int2) /Integer(2)
+
+def markov_inequality(mean, a):
+    # Compute the upper bound probability according to Markov's inequality
+    return mean / a
 
 def nada_main():
     party1 = Party(name="Party1")
+    
+    # Secure inputs
     my_int1 = SecretInteger(Input(name="my_int1", party=party1))
     my_int2 = SecretInteger(Input(name="my_int2", party=party1))
 
-    # write the computation for your program here - use my_int1 and my_int2 as inputs
-    # make sure you change the output below to be your new output
+    mean = compute_mean(my_int1, my_int2)
+    a = Integer(10)
 
-    return [Output(my_int1, "my_output", party1)]
+    upper_bound_probability = markov_inequality(mean, a)
+
+    return [Output(upper_bound_probability, "upper_bound_probability", party1)]
